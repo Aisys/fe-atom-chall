@@ -1,0 +1,17 @@
+/* You can add global styles to this file, and also import other style files */
+@import "./assets/theme/theme.scss";
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: #F2F8FC; }
+
+.flex-column-center {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+}
+.it-start {
+    align-items: flex-start !important;
+}
+.it-end {
+    align-items: flex-end !important;
+}
