@@ -15,37 +15,38 @@ export class PagesComponent implements AfterViewInit, OnInit, OnDestroy {
   PATH_USER_TASKS = PATH_USER_TASKS;
   PATH_DEV_NOTES = PATH_DEV_NOTES;
 
-  currentPath:any = '';
+  currentPath: any = '';
 
   private routerEventsSubscription: Subscription = new Subscription();
 
 
   constructor(
     private router: Router,
-  ) {}
+  ) { }
 
-  ngAfterViewInit(): void {  
+  ngAfterViewInit(): void {
   }
 
   ngOnInit(): void {
-    
     this.currentPath = this.router.url.split('/').pop();
-    this.routerEventsSubscription = 
+    this.routerEventsSubscription =
       this.router.events
         .pipe(
           filter(event => event instanceof NavigationEnd)
-        ).subscribe((event:any) => {
+        ).subscribe((event: any) => {
           if (event) {
             this.currentPath = event.url.split('/').pop();
 
           }
-    })
-
-
+        })
   }
 
- 
-  
+  logout() {
+    localStorage.removeItem('token');
+    this.router.navigate(['login']);
+  }
+
+
   ngOnDestroy(): void {
     if (this.routerEventsSubscription) {
       this.routerEventsSubscription.unsubscribe();

@@ -1,3 +1,7 @@
+<div class="spinner-container" [style.display]="isLoading()">
+  <mat-spinner></mat-spinner>
+</div>
+
 <div class="main-w">
   <form [formGroup]="loginForm" (ngSubmit)="login()">
     <mat-card class="flex-box">

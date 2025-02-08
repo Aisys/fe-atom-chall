@@ -8,8 +8,12 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
-import { UserService } from '../../shared/services/user.service';
+
+import { DialogRedirectComponent } from '../../pages/user-tasks/dialog-redirect/dialog-redirect.component';
 
 
 @NgModule({
@@ -22,9 +26,12 @@ import { UserService } from '../../shared/services/user.service';
     MatInputModule,
     MatButtonModule,
     MatGridListModule,
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    MatSnackBarModule,
   ],
   providers: [],
-  declarations: [LoginComponent],
+  declarations: [LoginComponent, DialogRedirectComponent],
   exports: [LoginComponent],
 })
 export class LoginModule { }

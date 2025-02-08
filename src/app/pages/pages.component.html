@@ -4,7 +4,7 @@
     <a color="primary" routerLink="/app/user-tasks" [disabled]="currentPath === PATH_USER_TASKS" mat-button >Tareas</a>
     <a color="primary" routerLink="/app/dev-notes" [disabled]="currentPath === PATH_DEV_NOTES" mat-button >Dev Notes</a>
     <span class="spacer"></span>
-    <button routerLink="/login" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" (click)="logout()">
       <mat-icon>exit_to_app</mat-icon>
     </button>
     
