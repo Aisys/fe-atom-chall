@@ -1,40 +1,51 @@
 <div class="main-w">
-  <mat-card class="flex-box">
-        <mat-card-header style="justify-content: center;">
-          
-          <img src="../../../assets/img/logo-atom-chat.png" alt="Atom-logo">
-          <div class="flex-column-center">
-            <mat-card-subtitle>Challenge</mat-card-subtitle>
-            <mat-card-title>SIGNUP</mat-card-title>
+  <form [formGroup]="signupForm" (ngSubmit)="signup()">
+    <mat-card class="flex-box">
+      <mat-card-header style="justify-content: center;">
+
+        <img src="../../../assets/img/logo-atom-chat.png" alt="Atom-logo">
+        <div class="flex-column-center">
+          <mat-card-subtitle>Challenge</mat-card-subtitle>
+          <mat-card-title>SIGNUP</mat-card-title>
+        </div>
+      </mat-card-header>
+      <mat-card-content class="flex-column-center">
+        <mat-form-field>
+          <mat-label>Nombres</mat-label>
+          <input matInput placeholder="Escribe tus nombres..." formControlName="names" id="names">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Apellidos</mat-label>
+          <input matInput placeholder="Escribe tus apellidos..." formControlName="lastNames" id="lastNames">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Correo</mat-label>
+          <input type="email" matInput placeholder="email@example.com" formControlName="email" id="email">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Contraseña</mat-label>
+          <input type="password" matInput placeholder="**********" formControlName="password" id="password">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Confirmación de contraseña</mat-label>
+          <input type="password" matInput placeholder="Confirma tu contraseña" formControlName="passwordConf"
+            id="passwordConf">
+        </mat-form-field>
+        <div *ngIf="signupForm.get('email')?.invalid && (signupForm.get('email')?.dirty || signupForm.get('email')?.touched)">
+          <div *ngIf="signupForm.get('email')?.errors?.['email']">
+            <p class="error-message">El correo electrónico no tiene un formato válido.</p>
           </div>
-        </mat-card-header>
-        <mat-card-content class="flex-column-center">
-          <mat-form-field>
-            <mat-label>Nombres</mat-label>
-            <input matInput placeholder="Escribe tus nombres...">
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>Apellidos</mat-label>
-            <input matInput placeholder="Escribe tus apellidos...">
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>Correo</mat-label>
-            <input type="email" matInput placeholder="email@example.com">
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>Contraseña</mat-label>
-            <input type="password" matInput placeholder="**********">
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>Confirmación de contraseña</mat-label>
-            <input type="password" matInput placeholder="Confirma tu contraseña">
-          </mat-form-field>
-        </mat-card-content>
-    
-        <mat-card-actions class="flex-column-center it-end">
-          <button mat-flat-button color="primary">Aceptar</button>
-          <br>
-          <a routerLink="/login">Regresar al login</a>
-        </mat-card-actions>
-      </mat-card>
-  </div>
+        </div>
+        <div *ngIf="signupForm.errors?.['passwordMismatch'] && (signupForm.dirty || signupForm.touched)">
+          <p class="error-message">La contraseña y su confirmación deben coincidir.</p>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions class="flex-column-center it-end">
+        <button type="submit" mat-flat-button color="primary" [disabled]="!signupForm.valid">Aceptar</button>
+        <br>
+        <a routerLink="/login">Regresar al login</a>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>

@@ -1,7 +1,9 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { UserService } from '../../shared/services/user.service';
+import { firstValueFrom } from 'rxjs';
 
 export interface PeriodicElement {
   name: string;
@@ -30,9 +32,12 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['user-tasks.component.scss']
 })
 
-export class UserTasksComponent {
+export class UserTasksComponent implements OnInit {
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private userService: UserService) {
+  }
+
+  async ngOnInit() {
   }
 
   displayedColumns: string[] = ['select', 'position', 'name', 'weight', 'symbol'];

@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserService } from '../../shared/services/user.service';
+import { firstValueFrom } from 'rxjs';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -8,10 +11,27 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
 
-  constructor(private router: Router) {}
+  loginForm = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', Validators.required),
+  });
 
-  login() {
-    this.router.navigate(['app/user-tasks']);
+  constructor(
+    private router: Router,
+    private userService: UserService,
+  ) { }
+
+  async login() {
+    await firstValueFrom(this.userService.postLogin(
+      this.loginForm.controls.email.value, this.loginForm.controls.password.value
+    )).then(valor => {
+      if (valor && valor.token) {
+        localStorage.setItem('token', valor.token);
+        this.router.navigate(['app/user-tasks']);
+      } else {
+        // ERROR
+      }
+    });
   }
 
 }
