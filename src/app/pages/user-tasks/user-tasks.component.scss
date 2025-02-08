@@ -1,0 +1,25 @@
+.actions-box {
+    margin-top: 5em;
+    margin-bottom: 2em;
+    margin-left: 2em;
+}
+
+.table-box {
+    margin-left: 2em;
+    margin-right: 2em;
+}
+
+th {
+    font-weight: bold !important;
+    font-size: 1.2em;
+}
+
+.celd-complete {
+    font-weight: bold;
+    color: green;
+}
+
+.celd-pending {
+    font-weight: bold;
+    color: red;
+}

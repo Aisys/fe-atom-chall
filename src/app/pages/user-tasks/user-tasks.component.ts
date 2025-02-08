@@ -4,26 +4,15 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { UserService } from '../../shared/services/user.service';
 import { firstValueFrom } from 'rxjs';
+import { TaskService } from '../../shared/services/task.service';
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+export interface TasksElement {
+  id: string;
+  title: string;
+  description: string;
+  creation: Date;
+  complete: boolean;
 }
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-];
 
 
 @Component({
@@ -34,24 +23,62 @@ const ELEMENT_DATA: PeriodicElement[] = [
 
 export class UserTasksComponent implements OnInit {
 
-  constructor(private router: Router, private userService: UserService) {
+  displayedColumns: string[] = ['select', 'id', 'title', 'description', 'creation', 'complete', 'actions'];
+  dataSource = new MatTableDataSource<TasksElement>([]);
+  selection = new SelectionModel<TasksElement>(true, []);
+  loadingStatus = false;
+
+  constructor(private router: Router, private taskService: TaskService) {
   }
 
   async ngOnInit() {
+    await this.upgradeTable();
   }
 
-  displayedColumns: string[] = ['select', 'position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
-  selection = new SelectionModel<PeriodicElement>(true, []);
+  async upgradeTable() {
+    this.loadingStatus = true;
+    this.dataSource.data = [];
+    this.selection.clear();
+    await firstValueFrom(this.taskService.getAllTasks()).then(resp => {
+      if (resp) {
+        this.dataSource.data.push(...resp);
+        this.dataSource.data = [...this.dataSource.data]
+      }
+    }).catch(err => {
+      console.warn(err);
+    });
+    this.loadingStatus = false;
+  }
 
-  /** Whether the number of selected elements matches the total number of rows. */
+  async change() {
+    this.loadingStatus = true;
+    const ids: string[] = this.selection.selected.map(element => element.id);
+    await firstValueFrom(this.taskService.putChangeStates(ids)).then(resp => {
+      console.log(resp);
+    });
+    await this.upgradeTable();
+
+  }
+  add() {
+    console.log('agregar')
+  }
+  edit(element: TasksElement) {
+    console.log('editar', element);
+  }
+  async delete(element: TasksElement) {
+    this.loadingStatus = true;
+    await firstValueFrom(this.taskService.deleteTask(element.id)).then(resp => {
+      console.log(resp);
+    });
+    await this.upgradeTable();
+  }
+
+
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
   }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
   toggleAllRows() {
     if (this.isAllSelected()) {
       this.selection.clear();
@@ -60,12 +87,18 @@ export class UserTasksComponent implements OnInit {
 
     this.selection.select(...this.dataSource.data);
   }
-
-  /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: PeriodicElement): string {
+  checkboxLabel(row?: TasksElement): string {
     if (!row) {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.title}`;
+  }
+
+
+  statusClass(complete: boolean): string {
+    return complete ? 'celd-complete' : 'celd-pending';
+  }
+  isLoading(): string {
+    return this.loadingStatus ? 'flex' : 'none';
   }
 }
