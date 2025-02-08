@@ -1,0 +1,17 @@
+<form [formGroup]="taskForm" >
+  <h2 mat-dialog-title>{{ data? 'Editar: ' + data.id : 'Creación de tarea' }}</h2>
+  <mat-dialog-content class="flex-column-center">
+    <p *ngIf="!data">NOTA: Las tareas se crean por defecto con estado Pendiente.</p>
+    <mat-form-field>
+      <mat-label>Título</mat-label>
+      <input matInput formControlName="title" id="title">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Descripción</mat-label>
+      <textarea matInput placeholder="Escribe sobre la tarea..." formControlName="description" id="description"></textarea>
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button color="accent" mat-flat-button [mat-dialog-close]="taskForm.getRawValue()" [disabled]="!taskForm.valid">ACEPTAR</button>
+  </mat-dialog-actions>
+</form>

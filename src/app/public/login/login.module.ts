@@ -12,10 +12,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
-
-import { DialogRedirectComponent } from '../../pages/user-tasks/dialog-redirect/dialog-redirect.component';
-
-
 @NgModule({
   imports: [
     CommonModule,
@@ -31,7 +27,7 @@ import { DialogRedirectComponent } from '../../pages/user-tasks/dialog-redirect/
     MatSnackBarModule,
   ],
   providers: [],
-  declarations: [LoginComponent, DialogRedirectComponent],
+  declarations: [LoginComponent],
   exports: [LoginComponent],
 })
 export class LoginModule { }

@@ -14,6 +14,14 @@ export class TaskService {
     return this.http.get<any>(`${this.apiUrl}`);
   }
 
+  postTask(title: string, description: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}`, {title, description});
+  }
+
+  putTask(id: string, title: string, description: string): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}`, {title, description});
+  }
+
   putChangeStates(ids: string[]): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/change-states`, ids);
   }
