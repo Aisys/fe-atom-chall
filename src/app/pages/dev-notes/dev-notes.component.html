@@ -1,1 +1,112 @@
-<h2>ESTOY EN DEV NOTES</h2>
+<div style="padding: 6em 6em 0 6em">
+    <mat-accordion>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <b>Instrucciones recibidas</b>
+                </mat-panel-title>
+                <mat-panel-description>
+                    enviadas por correo
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div role="list">
+                <p>
+                    <b>1.</b> La aplicación consta de 2 páginas, la primera la cual funcionará como un inicio de sesión y la
+                    segunda página que será la principal, en la cual se mostrarán todas las tareas pendientes del
+                    usuario ordenadas por fecha de creación.
+                </p>
+                <p>
+                    <b>2.</b> La página de inicio de sesión tiene un formulario donde solo se debe pedir el correo. Si el
+                    usuario existe, navega a la página principal, en caso contrario se deberá presentar un diálogo que
+                    confirme la creación del usuario. Si se crea el usuario debe navegar directamente a la página
+                    principal.
+                </p>
+                <p>
+                    <b>3.</b> Debe haber un formulario en la página principal que permite agregar nuevas tareas. Además de un
+                    botón que permite volver al inicio de sesión
+                </p>
+                <p>
+                    <b>4.</b> Cada tarea debe mostrar su título, descripción, fecha de creación y estado de completado.
+                </p>
+                <p>
+                    <b>5.</b> El usuario debe poder marcar una tarea como completada o pendiente mediante una casilla de
+                    verificación.
+                </p>
+                <p>
+                    <b>6.</b> Debe existir una opción para editar y eliminar una tarea.
+                </p>
+                <p>
+                    <b>7.</b> La aplicación debe ser responsive y adaptarse a diferentes dispositivos.
+                </p>
+                <p>
+                    <b>8.</b> Desarrollar un API con lo siguiente: Express y Typescript Hosteado en cloudfunctions Firebase
+                    Firestore para guardar los datos de las tareas. <br><br>
+
+                    El API deberá tener los siguientes endpoints: <br>
+
+                    GET /tasks: Obtener la lista de todas las tareas. <br>
+                    POST /tasks: Agregar una nueva tarea. <br>
+                    PUT /tasks/taskId: Actualizar los datos de una tarea existente. <br>
+                    DELETE /tasks/taskId: Eliminar una tarea existente. <br>
+                    GET /users/email: Busca el usuario si ha sido creado <br>
+                    POST /users : Agrega un nuevo usuario <br>
+                </p>
+            </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <b>Tecnologías</b>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>
+                <b>Frontend:</b> Última versión estable de Angular 17 y su versión de Angular Material.
+            </p>
+            <p>
+                <b>Backend:</b> Originalmente, iba a utilizar NestJS pueto que es un framework con el que ya he trabjado. Si bien se indica en
+                las instrucciones que en el backend se utilizara TS, también se solicitaba el uso de ExpressJS. NestJS utiliza como base ExpressJS, pero 
+                su uso es implícito. Por lo tanto trabajé utilizando ExpressJs.
+            </p>
+        </mat-expansion-panel>
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <b>Aplicación</b>
+                </mat-panel-title>
+                <mat-panel-description>
+                    breve explicación sobre el análisis y de cómo se trabajo lo solicitado.
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <p>
+
+                <b>1. </b> En el inicio de la aplicación se cambió la pantalla en la que únicamente se solicita el correo
+                por un flujo de Login y Logup más "tradicional". Esto debido a que se quería dejar maquetado los "Interceptor" y "Middelwares" necesarios
+                para la seguridad tanto en el frontend como en el backend. Por este motivo también se agregó la pantalla para registar un nuevo usuario en
+                la cual tras registrar un nuevo usuario, se redireccionará al inicio de la aplicación [Vista Tareas].
+                <br>
+                <b>2. </b> En el frontend, existe una validación sencilla para el token y restringir las rutas, ademaás de enviar el
+                token en cada petición tras realizar el login.
+                <br>
+                <b>3. </b> En el backend se dejó configurado el token de autenticación con firebase, y se colocó el interceptor en las rutas que podrían 
+                considerarse "privadas" 
+                <br>
+                <b>4. </b> Se añadió la opción de seleccionar múltiples tareas y cambiarles de estado masivamente. El endpoint quedó funcionando de tal manera 
+                que si una tarea se encuentra en Pendiente y se actualiza de esta manera, cambiará a Completado, si la tarea está en Completado regresará a estar
+                en pendiente.
+                <br><br>
+                <b>Se implementaron los siguientes endpoints:</b> 
+                <br><br>
+                POST /users/logup : Agregar un nuevo usuario (También agrega el token para realizar el login). <br>
+                POST /users/login : Verificación de credenciales usuario (También agrega el token para realizar el login). <br>
+                GET /users/email: Este método no se utilizó en la aplicación, por el cambio de flujo mencionado anteriormente, 
+                sin embargo se puede obtener la respuesta <a [href]="userByEmail">aquí</a> (puede cambiar de correo si es necesario). <br>
+                <br>
+                GET /tasks: Obtener la lista de todas las tareas. <br>
+                POST /tasks: Agregar una nueva tarea. (La fecha de creación se agrega en el backend, al igual que el estado false por defecto). <br>
+                PUT /tasks/taskId: Actualizar los datos de una tarea existente (no se modifica la fecha de creación, el estado no se modifica). <br>
+                PUT /tasks/change-states: Recibe un listado de idTask y modifica la propiedad complete (estado), asignando el valor contrario. <br>
+
+            </p>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

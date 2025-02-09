@@ -1,8 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { DevNotesComponent } from './dev-notes.component';
 import { RouterModule, Routes } from '@angular/router';
+
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatListModule } from '@angular/material/list';
+
+
 
 const routes: Routes = [
   {
@@ -14,8 +18,10 @@ const routes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
 
+    MatExpansionModule,
+    MatListModule,
   ],
   declarations: [DevNotesComponent],
   exports: [RouterModule]

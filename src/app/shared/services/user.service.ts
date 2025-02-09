@@ -19,7 +19,6 @@ export class UserService {
     return this.http.post<any>(`${this.apiUrl}/login`, obj);
   }
 
-
   postSignup(
     names: string|null,lastNames: string|null,email: string|null,password : string|null
   ): Observable<any> {

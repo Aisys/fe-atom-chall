@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-dev-notes',
@@ -8,7 +9,8 @@ import { Router } from '@angular/router';
 })
 export class DevNotesComponent {
 
-  constructor(private router: Router) {
-  }
+  panelOpenState = false;
+  userByEmail  = environment.services.apiUser + '/admin@admin.com';
+  constructor() {}
 
 }
